@@ -1,0 +1,15 @@
+# Extra non-Tailscale VPN bypass routes
+#
+# Copy this file to:
+#   ${XDG_CONFIG_HOME:-$HOME/.config}/doc-newbie/vpn-bypass-routes.conf
+#
+# Add only destinations that must use the ordinary non-VPN default route.
+# tailscaled already manages Tailscale peer and accepted subnet routes; do not
+# duplicate those routes here. Hostnames and bare IP addresses are not allowed.
+# Use /32 for one IPv4 address and /128 for one IPv6 address.
+#
+# Documentation-only examples (replace or remove before applying):
+198.51.100.42/32
+203.0.113.0/24
+2001:db8:100::/48
+2001:db8:200::42/128
