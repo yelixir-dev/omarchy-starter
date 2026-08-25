@@ -722,6 +722,30 @@ Ctrl + Space로 한/영 전환이 되는지까지 검증해줘.
             <code>profile</code>로 복원한 뒤 Fcitx5를 다시 시작하세요.
           </p>
         </section>
+
+        <section class="step-card">
+          <span class="step-label">직접 설치하기 — 선택</span>
+          <h2>상태바에 현재 입력 언어를 표시합니다</h2>
+          <p>
+            지금 한글인지 영문인지 헷갈릴 때가 많다면 상태바 오른쪽에 표시를
+            추가하세요. 한국어 입력 중에는 <strong>K</strong>, 영어 입력 중에는
+            <strong>E</strong>가 다른 아이콘과 같은 색으로 보이고, 클릭하면 바로
+            전환됩니다. sudo 없이 사용자 설정만 바꾸는 스크립트입니다.
+          </p>
+          <pre><code>cd omarchy-starter
+./install-fcitx5-bar-indicator.sh</code></pre>
+          <p>제거하려면:</p>
+          <pre><code>./install-fcitx5-bar-indicator.sh --uninstall</code></pre>
+        </section>
+
+        <aside class="ai-prompt" aria-label="AI에게 입력 언어 표시 설치 맡기기">
+          <strong>AI에게 맡기기</strong>
+          <pre><code>내 컴퓨터는 Omarchy(Arch Linux)에 Fcitx5 한글 입력기가 설치돼 있어.
+https://github.com/yelixir-dev/omarchy-starter 저장소를 clone 받고, 그 안의
+install-fcitx5-bar-indicator.sh를 실행해서 상태바 오른쪽에 현재 입력 언어
+(한국어 K / English E) 표시를 추가해줘. 설치 후 fcitx5-remote -t로 전환하면
+아이콘이 K와 E로 바뀌는지까지 검증해줘.</code></pre>
+        </aside>
         <section id="palm" class="chapter-intro">
           <span class="chapter-number">03 · 선택</span>
           <h2>2019년 이하 Intel Mac 팜 리젝션</h2>
@@ -1150,6 +1174,10 @@ sudo ./manage-vpn-bypass-routes.sh remove # 적용 해제</code></pre>
             <li>
               <code>install-intel-mac-palm-rejection.sh</code>: Apple 트랙패드 분류
               수정 스크립트
+            </li>
+            <li>
+              <code>install-fcitx5-bar-indicator.sh</code>: 상태바 입력 언어(K/E)
+              표시 설치 스크립트
             </li>
             <li><code>DESIGN.md</code>: 문서의 색상, 타이포그래피, 접근성 기준</li>
             <li>

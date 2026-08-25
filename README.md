@@ -79,6 +79,7 @@ bash tests/test-manage-vpn-bypass-routes.sh    # 19 tests, last line prints 1..1
 index.html                              the single-file guide (images embedded)
 install-fcitx5-hangul.sh                Fcitx5 Korean input installer
 install-intel-mac-palm-rejection.sh     Intel Mac trackpad classification fix
+install-fcitx5-bar-indicator.sh         bar K/E input-language indicator installer
 manage-vpn-bypass-routes.sh             non-Tailscale CIDR bypass manager
 tests/test-manage-vpn-bypass-routes.sh  19-test regression suite for the helper
 DESIGN.md                               design contract for the guide
