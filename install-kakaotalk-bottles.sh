@@ -27,6 +27,13 @@ have_bottles() {
   command -v flatpak >/dev/null 2>&1 && flatpak info "$FLATPAK_ID" >/dev/null 2>&1
 }
 
+# Bottles Flatpak은 기본적으로 홈 폴더 접근이 막혀 있을 수 있어
+# 설치 파일(~/Downloads)과 보틀 디렉터리 접근 권한을 부여합니다.
+grant_flatpak_access() {
+  flatpak override --user "$FLATPAK_ID" --filesystem=home
+  log "Flatpak 홈 폴더 접근 권한을 부여했습니다"
+}
+
 install_bottles() {
   log "Bottles(Flatpak)를 설치합니다. 관리자 암호를 입력하세요."
   sudo pacman -S --needed --noconfirm flatpak
@@ -102,9 +109,11 @@ case "${1:-install}" in
   install)
     have_bottles || install_bottles
     have_bottles || fail "Bottles 설치에 실패했습니다"
+    grant_flatpak_access
 
     installer="$(ensure_installer)"
     log "설치 파일: $installer"
+    [[ -r "$installer" ]] || fail "설치 파일을 읽을 수 없습니다: $installer"
 
     if ! bottle_exists; then
       log "kakaotalk 보틀을 생성합니다(처음은 몇 분 걸립니다)"
