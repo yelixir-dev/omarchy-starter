@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="tests/"><img alt="tests: 19 passing" src="https://img.shields.io/badge/tests-19_passing-1f6f78"></a>
-  <a href="index.html"><img alt="guide: single-file HTML" src="https://img.shields.io/badge/guide-single--file_HTML-b57920"></a>
+  <a href="omarchy-starter.html"><img alt="guide: single-file HTML" src="https://img.shields.io/badge/guide-single--file_HTML-b57920"></a>
   <img alt="license: to be declared" src="https://img.shields.io/badge/license-to_be_declared-9f4d2e">
 </p>
 
@@ -19,13 +19,13 @@
 
 <!-- README-I18N:END -->
 
-**omarchy-starter** is a beginner's setup guide for [Omarchy](https://omarchy.org) Linux, published as one self-contained `index.html` — screenshots embedded, no build step, readable straight from [GitHub Pages](https://yelixir-dev.github.io/omarchy-starter/) or from a single downloaded file. Four chapters cover an optional AI coding agent (OMO), the required Korean input method (Fcitx5), palm rejection for 2019-or-earlier Intel Macs, and running Tailscale and NordVPN together without conflicts. Every chapter was executed and verified on a real Omarchy 4.0 machine before it was written down.
+**omarchy-starter** is a beginner's setup guide for [Omarchy](https://omarchy.org) Linux, published as one self-contained `omarchy-starter.html` — screenshots embedded, no build step, readable straight from [GitHub Pages](https://yelixir-dev.github.io/omarchy-starter/omarchy-starter.html) or from a single downloaded file. Four chapters cover an optional AI coding agent (OMO), the required Korean input method (Fcitx5), palm rejection for 2019-or-earlier Intel Macs, and running Tailscale and NordVPN together without conflicts. Every chapter was executed and verified on a real Omarchy 4.0 machine before it was written down.
 
 [What it does](#what-it-does) · [Install](#install) · [Usage](#usage) · [How it works](#how-it-works) · [Repository layout](#repository-layout) · [Current limitations](#current-limitations) · [License](#license)
 
 ## What it does
 
-- **One file is the whole guide.** `index.html` embeds its screenshots as data URIs, so sharing that single file (or the Pages link) delivers the complete document.
+- **One file is the whole guide.** `omarchy-starter.html` embeds its screenshots as data URIs, so sharing that single file (or the Pages link) delivers the complete document.
 - **Every chapter follows the same three blocks.** A plain-language explanation, direct Omarchy commands, and an "AI에게 맡기기" prompt a beginner can paste into an AI coding agent to have the task done for them.
 - **Three scripts automate the hard parts.** `install-fcitx5-hangul.sh` (Korean input with timestamped profile backups), `install-intel-mac-palm-rejection.sh` (udev hwdb fix with `--dry-run` and `--uninstall`), and `manage-vpn-bypass-routes.sh` (user-managed non-Tailscale CIDR bypasses).
 - **The VPN chapter documents a verified coexistence.** Tailscale mesh plus a NetworkManager OpenVPN profile — peer routes stay in Tailscale's table 52 while all other traffic uses Nord, with intentional fail-open and no kill switch.
@@ -48,7 +48,7 @@ The scripts target Omarchy/Arch Linux and ask for sudo where they touch the syst
 Open the guide and follow the chapters in order:
 
 ```bash
-xdg-open index.html        # or open https://yelixir-dev.github.io/omarchy-starter/
+xdg-open omarchy-starter.html        # or open https://yelixir-dev.github.io/omarchy-starter/omarchy-starter.html
 ```
 
 Each "AI에게 맡기기" block is a complete prompt. Example trigger from the Korean-input chapter:
@@ -76,7 +76,7 @@ bash tests/test-manage-vpn-bypass-routes.sh    # 19 tests, last line prints 1..1
 ## Repository layout
 
 ```text
-index.html                              the single-file guide (images embedded)
+omarchy-starter.html                              the single-file guide (images embedded)
 install-fcitx5-hangul.sh                Fcitx5 Korean input installer
 install-intel-mac-palm-rejection.sh     Intel Mac trackpad classification fix
 install-fcitx5-bar-indicator.sh         bar K/E input-language indicator installer

@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="tests/"><img alt="테스트: 19 통과" src="https://img.shields.io/badge/tests-19_passing-1f6f78"></a>
-  <a href="index.html"><img alt="가이드: 단일 파일 HTML" src="https://img.shields.io/badge/guide-single--file_HTML-b57920"></a>
+  <a href="omarchy-starter.html"><img alt="가이드: 단일 파일 HTML" src="https://img.shields.io/badge/guide-single--file_HTML-b57920"></a>
   <img alt="라이선스: to be declared" src="https://img.shields.io/badge/license-to_be_declared-9f4d2e">
 </p>
 
@@ -19,13 +19,13 @@
 
 <!-- README-I18N:END -->
 
-**omarchy-starter**는 [Omarchy](https://omarchy.org) Linux 초보자를 위한 설치 안내서로, 스크린샷까지 내장한 단일 `index.html` 하나로 배포됩니다. 빌드 과정 없이 [GitHub Pages](https://yelixir-dev.github.io/omarchy-starter/)에서 바로 읽거나 파일 하나만 내려받아 열어볼 수 있습니다. 네 개의 장에서 AI 코딩 에이전트(OMO, 선택), 한국어 입력기(Fcitx5, 필수), 2019년 이하 Intel Mac 팜 리젝션, Tailscale과 NordVPN의 충돌 없는 동시 사용을 다룹니다. 모든 장은 실제 Omarchy 4.0 장비에서 직접 실행하고 검증한 뒤 작성됐습니다.
+**omarchy-starter**는 [Omarchy](https://omarchy.org) Linux 초보자를 위한 설치 안내서로, 스크린샷까지 내장한 단일 `omarchy-starter.html` 하나로 배포됩니다. 빌드 과정 없이 [GitHub Pages](https://yelixir-dev.github.io/omarchy-starter/omarchy-starter.html)에서 바로 읽거나 파일 하나만 내려받아 열어볼 수 있습니다. 네 개의 장에서 AI 코딩 에이전트(OMO, 선택), 한국어 입력기(Fcitx5, 필수), 2019년 이하 Intel Mac 팜 리젝션, Tailscale과 NordVPN의 충돌 없는 동시 사용을 다룹니다. 모든 장은 실제 Omarchy 4.0 장비에서 직접 실행하고 검증한 뒤 작성됐습니다.
 
 [무엇을 하나요](#무엇을-하나요) · [설치](#설치) · [사용법](#사용법) · [동작 방식](#동작-방식) · [저장소 구성](#저장소-구성) · [현재 한계](#현재-한계) · [라이선스](#라이선스)
 
 ## 무엇을 하나요
 
-- **파일 하나가 안내서 전부입니다.** `index.html`이 스크린샷을 data URI로 내장해서, 파일 하나(또는 Pages 링크)만 전달해도 문서 전체가 열립니다.
+- **파일 하나가 안내서 전부입니다.** `omarchy-starter.html`이 스크린샷을 data URI로 내장해서, 파일 하나(또는 Pages 링크)만 전달해도 문서 전체가 열립니다.
 - **모든 장이 같은 3단 구조입니다.** 초보자용 설명, 직접 따라 하는 Omarchy 명령어, 그리고 AI 코딩 에이전트에 붙여넣어 작업을 맡길 수 있는 "AI에게 맡기기" 프롬프트입니다.
 - **스크립트 3개가 어려운 부분을 자동화합니다.** `install-fcitx5-hangul.sh`(날짜 백업을 포함한 한글 입력 설치), `install-intel-mac-palm-rejection.sh`(`--dry-run`과 `--uninstall`을 갖춘 udev hwdb 수정), `manage-vpn-bypass-routes.sh`(사용자 관리 비-Tailscale CIDR 우회)입니다.
 - **VPN 장은 실제 검증된 공존을 다룹니다.** Tailscale mesh와 NetworkManager OpenVPN 프로필 조합으로, 피어 경로는 Tailscale table 52에 두고 나머지 트래픽만 Nord를 타게 하며, kill switch 없이 의도적으로 fail-open 합니다.
@@ -48,7 +48,7 @@ chmod +x install-fcitx5-hangul.sh install-intel-mac-palm-rejection.sh manage-vpn
 안내서를 열고 장을 순서대로 따라 하세요:
 
 ```bash
-xdg-open index.html        # 또는 https://yelixir-dev.github.io/omarchy-starter/ 접속
+xdg-open omarchy-starter.html        # 또는 https://yelixir-dev.github.io/omarchy-starter/omarchy-starter.html 접속
 ```
 
 각 "AI에게 맡기기" 블록은 완성된 프롬프트입니다. 한글 입력기 장의 예시:
@@ -76,7 +76,7 @@ bash tests/test-manage-vpn-bypass-routes.sh    # 19개 테스트, 마지막 줄�
 ## 저장소 구성
 
 ```text
-index.html                              단일 파일 안내서(이미지 내장)
+omarchy-starter.html                              단일 파일 안내서(이미지 내장)
 install-fcitx5-hangul.sh                Fcitx5 한글 입력 설치 스크립트
 install-intel-mac-palm-rejection.sh     Intel Mac 트랙패드 분류 수정 스크립트
 install-fcitx5-bar-indicator.sh         상태바 입력 언어(K/E) 표시 설치 스크립트
