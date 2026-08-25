@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+  <rect width="1200" height="300" fill="#28231f"/>
+  <rect x="14" y="14" width="1172" height="272" fill="none" stroke="#b57920" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="80" y="78" fill="#b57920" font-family="Georgia, 'Times New Roman', serif" font-size="19" letter-spacing="6">OMARCHY LINUX · FIRST-DAY SETUP</text>
+  <text x="76" y="82" fill="#b57920" font-size="19">—</text>
+  <text x="1124" y="82" fill="#b57920" font-size="19" text-anchor="end">—</text>
+  <text x="600" y="168" fill="#fffdf8" font-family="Georgia, 'Times New Roman', serif" font-size="62" font-style="italic" text-anchor="middle">omarchy-starter</text>
+  <text x="600" y="215" fill="#a89f93" font-family="Georgia, 'Times New Roman', serif" font-size="19" text-anchor="middle">Single-file Korean guide · 3 install scripts · 19-test verified CIDR helper</text>
+  <rect x="540" y="244" width="120" height="3" fill="#9f4d2e"/>
+</svg>
