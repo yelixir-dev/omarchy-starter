@@ -13,7 +13,7 @@ set -euo pipefail
 
 readonly BOTTLE_NAME="kakaotalk"
 readonly FLATPAK_ID="com.usebottles.bottles"
-readonly DOWNLOAD_PAGE="https://pc.kakao.com/"
+readonly DOWNLOAD_PAGE="https://www.kakaocorp.com/page/service/all"
 readonly BINDINGS_FILE="$HOME/.config/hypr/bindings.lua"
 
 log() { printf '[kakaotalk-bottles] %s\n' "$*"; }
