@@ -142,6 +142,10 @@ if mode == "install":
     cleaned.insert(0, {"id": plugin_id})
 
 data["bar"]["layout"]["right"] = cleaned
+
+# plugin enable이 중앙 레이아웃에도 자동 추가하므로 항상 제거한다
+center = data["bar"]["layout"].get("center", [])
+data["bar"]["layout"]["center"] = [w for w in center if w.get("id") != plugin_id]
 with open(path, "w", encoding="utf-8") as fh:
     json.dump(data, fh, ensure_ascii=False, indent=2)
     fh.write("\n")

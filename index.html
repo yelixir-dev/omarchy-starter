@@ -552,6 +552,12 @@
         <section class="step-card">
           <span class="step-label">직접 설치하기</span>
           <h2>npm으로 설치하고 로그인합니다</h2>
+          <p>
+            먼저 터미널을 여세요. 키보드에서
+            <span class="nowrap"><kbd>Super</kbd> + <kbd>Enter</kbd></span>를
+            누륩면 터미널이 열립니다. Mac 키보드라면
+            <kbd>Command</kbd> 키가 Super 키입니다.
+          </p>
           <p>터미널에서 아래 명령을 한 줄씩 실행하세요.</p>
           <pre><code>npm i -g omo-ai@beta
 omo</code></pre>
@@ -1087,40 +1093,33 @@ ip route get 100.76.206.87          # table 52, tailscale0 경로 확인</code><
 
         <section class="step-card">
           <span class="step-label">직접 설치하기</span>
-          <h2>사용자 플러그인 두 개를 만들고 배치합니다</h2>
+          <h2>설치 스크립트 하나로 끝냅니다</h2>
           <p>
-            플러그인 폴더 두 개를 <code>~/.config/omarchy/plugins/</code> 아래에
-            만들고, 바 레이아웃 설정에 등록합니다. 이 안내서 작성자의 실제 파일은
-            다음 위치에 있습니다.
+            스크립트가 <strong>무엇이 설치돼 있는지 먼저 확인</strong>합니다.
+            Tailscale만 있으면 링크 아이콘만, NetworkManager VPN 프로필만 있으면
+            방패 아이콘만 추가하고, 둘 다 있으면 둘 다 추가합니다. 하나도 없으면
+            먼저 설치하라고 안내합니다.
           </p>
-          <pre><code>~/.config/omarchy/plugins/user.tailscale-toggle/
-~/.config/omarchy/plugins/user.nordvpn-toggle/
-~/.config/omarchy/shell.json   (center 레이아웃에 두 위젯 등록)</code></pre>
-          <p>등록 후에는 쉘을 다시 시작해야 반영됩니다.</p>
-          <pre><code>omarchy plugin enable user.tailscale-toggle
-omarchy plugin enable user.nordvpn-toggle
-/usr/share/omarchy/bin/omarchy-restart-shell</code></pre>
+          <pre><code>cd omarchy-starter
+./install-vpn-bar-toggles.sh</code></pre>
           <p>
-            Tailscale 아이콘 클릭이 암호 없이 동작하려면 한 번만 아래를 실행하세요.
+            sudo 없이 사용자 설정만 바꿉니다. 다만 Tailscale 아이콘 클릭이 암호
+            없이 동작하려면 한 번만 아래를 실행하세요.
           </p>
           <pre><code>sudo tailscale set --operator=$USER</code></pre>
+          <p>아이콘을 제거하려면:</p>
+          <pre><code>./install-vpn-bar-toggles.sh --uninstall</code></pre>
         </section>
 
         <aside class="ai-prompt" aria-label="AI에게 상태바 아이콘 설치 맡기기">
           <strong>AI에게 맡기기</strong>
           <pre><code>내 컴퓨터는 Omarchy 4.0(Quickshell 바)이고, Tailscale과 NordVPN
-(NetworkManager OpenVPN 프로필)을 쓰고 있어. 상태바에 두 개의 토글
-아이콘을 추가해줘.
-1. ~/.config/omarchy/plugins/ 아래에 bar-widget 플러그인 2개 작성
-   - Tailscale: 링크 아이콘, 클릭 시 tailscale up/down 토글
-   - NordVPN: 방패 아이콘, 클릭 시 nmcli connection up/down 토글
-   - 상태는 stdout 파싱으로 확인하고, 켜짐=표시, 꺼짐=숨김(호버 시 45%로
-     표시), 테마 기본 색상 사용
-2. ~/.config/omarchy/shell.json의 center 레이아웃에서 시계/날씨 오른쪽에
-   Tailscale, NordVPN 순서로 배치
-3. omarchy plugin enable 후 /usr/share/omarchy/bin/omarchy-restart-shell 실행
-   (파일 감시가 꺼져 있어 쉘 재시작이 필요)
-4. sudo tailscale set --operator=$USER는 내가 직접 실행할게</code></pre>
+(NetworkManager OpenVPN 프로필)을 쓰고 있어.
+https://github.com/yelixir-dev/omarchy-starter 저장소를 clone 받고, 그 안의
+install-vpn-bar-toggles.sh를 실행해서 상태바에 VPN 토글 아이콘을 추가해줘.
+스크립트가 설치된 것만 감지해서 아이콘을 넣어주니 그대로 진행하면 돼.
+완료 후 아이콘 클릭으로 on/off가 되는지 확인해줘.
+sudo tailscale set --operator=$USER는 내가 직접 실행할게.</code></pre>
         </aside>
 
         <section class="step-card">
@@ -1178,6 +1177,10 @@ sudo ./manage-vpn-bypass-routes.sh remove # 적용 해제</code></pre>
             <li>
               <code>install-fcitx5-bar-indicator.sh</code>: 상태바 입력 언어(K/E)
               표시 설치 스크립트
+            </li>
+            <li>
+              <code>install-vpn-bar-toggles.sh</code>: 상태바 VPN 토글 아이콘 설치
+              스크립트(설치된 것만 감지해 추가)
             </li>
             <li><code>DESIGN.md</code>: 문서의 색상, 타이포그래피, 접근성 기준</li>
             <li>
