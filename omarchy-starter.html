@@ -488,6 +488,7 @@
             <li><a href="#vpn-warning">함께 설치 시 주의점</a></li>
             <li><a href="#vpn-together">함께 쓰는 방법</a></li>
             <li><a href="#vpn-bar">상태바 아이콘</a></li>
+            <li><a href="#apps">카카오톡과 스크린샷</a></li>
             <li><a href="#files">파일 구성</a></li>
           </ol>
         </nav>
@@ -526,6 +527,12 @@
               <h3>VPN</h3>
               <p>Tailscale로 내 기기를 잇고, NordVPN으로 인터넷 출구를 바꿉니다.</p>
               <a href="#vpn">VPN 연결 보기</a>
+            </div>
+            <div class="journey-card">
+              <span class="badge">05 · 선택</span>
+              <h3>카카오톡과 스크린샷</h3>
+              <p>Bottles로 카카오톡을 쓰고, Mac처럼 화면을 캡처합니다.</p>
+              <a href="#apps">앱과 캡처 보기</a>
             </div>
           </div>
         </section>
@@ -1163,6 +1170,93 @@ sudo ./manage-vpn-bypass-routes.sh apply # 경로 적용
 sudo ./manage-vpn-bypass-routes.sh remove # 적용 해제</code></pre>
         </section>
 
+        <section id="apps" class="chapter-intro">
+          <span class="chapter-number">05 · 선택</span>
+          <h2>카카오톡과 스크린샷</h2>
+          <p>
+            Omarchy에 꼭 필요한 것은 아니지만, 한국 사용자에게는 카카오톡이
+            필요하고, Print 키가 없는 노트북에서는 스크린샷 단축키가 아쉽습니다.
+            이 장에서는 Windows용 카카오톡을 Bottles로 설치하고, Mac과 비슷한
+            방식의 캡처 단축키와 상태바 캡처 버튼을 추가합니다.
+          </p>
+        </section>
+
+        <section class="chapter-intro">
+          <span class="chapter-number">05-1 · 카카오톡</span>
+          <h2>Bottles로 카카오톡 설치</h2>
+          <p>
+            Bottles는 Windows 프로그램을 리눅스에서 실행하게 해 주는 도구입니다.
+            카카오톡은 리눅스 버전이 없어서, Windows용 설치 파일을 Bottles 안에
+            설치하는 방법이 일반적입니다. 설치 스크립트가 Flatpak과 Bottles 설치,
+            보틀 생성, 프로그램 등록까지 대신하며, 설치 도중 열리는 Windows 설치
+            관리자 화면에서는 "다음"만 눌러 주면 됩니다.
+          </p>
+          <p>
+            Super + Shift + K가 비어 있으면 카카오톡 실행 단축키로 자동
+            등록됩니다(이미 다른 동작이 있으면 건드리지 않습니다).
+          </p>
+        </section>
+
+        <section class="step-card">
+          <span class="step-label">직접 설치하기</span>
+          <h2>스크립트를 실행하고 화면 안내를 따릅니다</h2>
+          <pre><code>cd omarchy-starter
+./install-kakaotalk-bottles.sh</code></pre>
+          <p>
+            카카오톡 설치 파일이 없으면 공식 다운로드 페이지가 열립니다.
+            "PC버전 다운로드(Windows)"를 받은 뒤 스크립트를 다시 실행하세요.
+          </p>
+          <p>제거하려면:</p>
+          <pre><code>./install-kakaotalk-bottles.sh --uninstall</code></pre>
+        </section>
+
+        <aside class="ai-prompt" aria-label="AI에게 카카오톡 설치 맡기기">
+          <strong>AI에게 맡기기</strong>
+          <pre><code>내 컴퓨터는 Omarchy(Arch Linux)야.
+https://github.com/yelixir-dev/omarchy-starter 저장소를 clone 받고, 그 안의
+install-kakaotalk-bottles.sh로 Bottles 기반 카카오톡을 설치해줘.
+Windows 설치 관리자가 열리면 내가 직접 클릭해서 완료할게.
+Super + Shift + K가 비어 있으면 실행 단축키로 등록하고, 점유돼 있으면
+알려만 줘. 설치 후 카카오톡이 실제로 실행되는지 확인해줘.</code></pre>
+        </aside>
+
+        <section class="chapter-intro">
+          <span class="chapter-number">05-2 · 스크린샷</span>
+          <h2>Mac처럼 화면 캡처하기</h2>
+          <p>
+            Print 키가 없는 노트북에서는 Mac과 같은 단축키가 편합니다.
+            아래 단축키는 Mac의 Command + Shift + 4(영역)와
+            Command + Shift + 3(전체 화면)에 해당합니다. 캡처는 모두
+            <code>~/Pictures</code> 폴더에 저장되고 클립보드에도 복사됩니다.
+            단축키가 익숙하지 않다면 상태바 시계 옆 카메라 버튼을 누르시면 됩니다.
+            이 버튼은 전체 화면 캡처 전용이며 항상 보입니다.
+          </p>
+        </section>
+
+        <section class="step-card">
+          <span class="step-label">직접 설치하기</span>
+          <h2>단축키와 상태바 버튼을 한 번에 추가합니다</h2>
+          <pre><code>cd omarchy-starter
+./install-screenshot-shortcuts.sh</code></pre>
+          <ul class="checklist">
+            <li><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>9</kbd>: 영역 캡처</li>
+            <li><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd>: 전체 화면 캡처</li>
+            <li>상태바 카메라 버튼: 전체 화면 캡처</li>
+          </ul>
+          <p>제거하려면:</p>
+          <pre><code>./install-screenshot-shortcuts.sh --uninstall</code></pre>
+        </section>
+
+        <aside class="ai-prompt" aria-label="AI에게 스크린샷 단축키 설치 맡기기">
+          <strong>AI에게 맡기기</strong>
+          <pre><code>내 컴퓨터는 Omarchy(Arch Linux)야. Print 키가 없는 노트북이라
+스크린샷이 불편해. https://github.com/yelixir-dev/omarchy-starter 저장소를
+clone 받고, 그 안의 install-screenshot-shortcuts.sh를 실행해서
+Super + Shift + 9(영역), Super + Shift + 0(전체 화면) 캡처와 상태바
+캡처 버튼을 추가해줘. 캡처 파일이 ~/Pictures와 클립보드에 모두
+저장되는지 직접 확인해줘.</code></pre>
+        </aside>
+
         <section id="files" class="plain-section">
           <span class="step-label">GitHub 정리용</span>
           <h2>이 폴더에 들어 있는 파일</h2>
@@ -1180,6 +1274,14 @@ sudo ./manage-vpn-bypass-routes.sh remove # 적용 해제</code></pre>
             <li>
               <code>install-vpn-bar-toggles.sh</code>: 상태바 VPN 토글 아이콘 설치
               스크립트(설치된 것만 감지해 추가)
+            </li>
+            <li>
+              <code>install-kakaotalk-bottles.sh</code>: Bottles 카카오톡 설치
+              스크립트
+            </li>
+            <li>
+              <code>install-screenshot-shortcuts.sh</code>: Mac 스타일 캡처 단축키와
+              상태바 버튼 설치 스크립트
             </li>
             <li><code>DESIGN.md</code>: 문서의 색상, 타이포그래피, 접근성 기준</li>
             <li>

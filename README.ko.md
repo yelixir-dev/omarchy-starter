@@ -81,6 +81,8 @@ install-fcitx5-hangul.sh                Fcitx5 한글 입력 설치 스크립트
 install-intel-mac-palm-rejection.sh     Intel Mac 트랙패드 분류 수정 스크립트
 install-fcitx5-bar-indicator.sh         상태바 입력 언어(K/E) 표시 설치 스크립트
 install-vpn-bar-toggles.sh            설치된 것만 감지해 추가하는 VPN 토글 설치 스크립트
+install-kakaotalk-bottles.sh           Bottles 카카오톡 설치 스크립트
+install-screenshot-shortcuts.sh         Mac 스타일 캡처 단축키 + 상태바 캡처 버튼 설치
 manage-vpn-bypass-routes.sh             비-Tailscale CIDR 우회 관리 도구
 tests/test-manage-vpn-bypass-routes.sh  도구 회귀 테스트 19개
 DESIGN.md                               안내서 디자인 계약
