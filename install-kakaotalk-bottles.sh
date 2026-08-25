@@ -81,7 +81,17 @@ REGEDIT4
 "Batang"="Noto Sans CJK KR"
 REG
   run_quiet bottles_cli_direct run -b "$BOTTLE_NAME" -e 'C:\windows\regedit.exe' '/S' 'C:\fixfonts.reg' >/dev/null || true
-  log "보틀에 한글 폰트와 대체 등록을 적용했습니다"
+
+  # 모니터 배율이 2인 환경에서 Wine 기본 96 DPI는 글자가 너무 작습니다.
+  # 레지스트리 v5 형식이어야 적용됩니다(REGEDIT4는 조용히 무시됨).
+  cat >"$drive_c/dpi.reg" <<'REG'
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"LogPixels"=dword:000000c0
+REG
+  run_quiet bottles_cli_direct run -b "$BOTTLE_NAME" -e 'C:\windows\regedit.exe' '/S' 'C:\dpi.reg' >/dev/null || true
+  log "보틀에 한글 폰트·대체 등록·200% DPI를 적용했습니다"
 }
 
 bottles_cli_direct() {
