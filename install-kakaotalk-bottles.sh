@@ -19,8 +19,19 @@ readonly BINDINGS_FILE="$HOME/.config/hypr/bindings.lua"
 log() { printf '[kakaotalk-bottles] %s\n' "$*"; }
 fail() { printf '[kakaotalk-bottles] 오류: %s\n' "$*" >&2; exit 1; }
 
+# 초보자가 불안해할 필요가 없는 알려진 잡음(Flatpak 경고, 403 인덱스,
+# wineserver 동기화 메시지)만 걸러냅니다. 실제 오류와 종료 코드는 유지합니다.
+NOISE_PATTERN='XDG_DATA_DIRS|are not in the search path|applications installed by Flatpak|HTTP 403|Catalog (components|installers|dependencies) loaded|wineserver: using server-side synchronization|^Note that the directories|^$\x27/var/lib/flatpak|^$\x27/home/'
+
+run_quiet() {
+  local out rc=0
+  out="$("$@" 2>&1)" || rc=$?
+  printf '%s\n' "$out" | /usr/bin/grep -vE "$NOISE_PATTERN" | /usr/bin/grep -v '^[[:space:]]*$' || true
+  return "$rc"
+}
+
 bottles_cli() {
-  flatpak run --command=bottles-cli "$FLATPAK_ID" "$@"
+  run_quiet flatpak run --command=bottles-cli "$FLATPAK_ID" "$@"
 }
 
 have_bottles() {
@@ -39,6 +50,42 @@ install_bottles() {
   sudo pacman -S --needed --noconfirm flatpak
   flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   flatpak install -y flathub "$FLATPAK_ID"
+}
+
+bottle_drive_c() {
+  printf '%s' "$HOME/.var/app/$FLATPAK_ID/data/bottles/bottles/$BOTTLE_NAME/drive_c"
+}
+
+# Windows 환경에 한글 폰트가 없으면 설치 관리자와 앱 글자가 네모로 깨집니다.
+# 시스템의 Noto CJK 폰트를 보틀에 넣고 맑은 고딕 등을 대체 등록합니다.
+install_korean_fonts() {
+  local drive_c fonts_dir reg_file src
+  drive_c="$(bottle_drive_c)"
+  fonts_dir="$drive_c/windows/Fonts"
+  [[ -d "$fonts_dir" ]] || return 0
+
+  for src in /usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc /usr/share/fonts/noto-cjk/NotoSansCJK-Bold.ttc; do
+    [[ -f "$src" ]] && cp -n "$src" "$fonts_dir/"
+  done
+
+  reg_file="$drive_c/fixfonts.reg"
+  cat >"$reg_file" <<'REG'
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontSubstitutes]
+"Malgun Gothic"="Noto Sans CJK KR"
+"Malgun Gothic Bold"="Noto Sans CJK KR"
+"Gulim"="Noto Sans CJK KR"
+"GulimChe"="Noto Sans CJK KR"
+"Dotum"="Noto Sans CJK KR"
+"Batang"="Noto Sans CJK KR"
+REG
+  run_quiet bottles_cli_direct run -b "$BOTTLE_NAME" -e 'C:\windows\regedit.exe' '/S' 'C:\fixfonts.reg' >/dev/null || true
+  log "보틀에 한글 폰트와 대체 등록을 적용했습니다"
+}
+
+bottles_cli_direct() {
+  flatpak run --command=bottles-cli "$FLATPAK_ID" "$@"
 }
 
 find_installer() {
@@ -121,6 +168,8 @@ case "${1:-install}" in
     else
       log "kakaotalk 보틀이 이미 있습니다"
     fi
+
+    install_korean_fonts
 
     if ! kakaotalk_exe_path >/dev/null 2>&1; then
       log "잠시 뒤 카카오톡 설치 관리자(Windows 창)가 열립니다."
