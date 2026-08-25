@@ -90,6 +90,9 @@ add_bindings() {
 
 -- Mac-style screenshots: Super+Shift+9 area, Super+Shift+0 fullscreen
 -- Both save to ~/Pictures and copy to the clipboard.
+-- Release Omarchy defaults that move windows to workspaces 9/10 on the same keys.
+hl.unbind("SUPER + SHIFT + code:18")
+hl.unbind("SUPER + SHIFT + code:19")
 o.bind("SUPER + SHIFT + 9", "Screenshot: 영역 캡처", "omarchy-capture-screenshot region slurp")
 o.bind("SUPER + SHIFT + 0", "Screenshot: 전체 화면 캡처", "omarchy-capture-screenshot fullscreen slurp")
 EOF
