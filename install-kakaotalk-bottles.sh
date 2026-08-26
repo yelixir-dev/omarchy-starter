@@ -11,10 +11,12 @@
 
 set -euo pipefail
 
+readonly SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 readonly BOTTLE_NAME="kakaotalk"
 readonly FLATPAK_ID="com.usebottles.bottles"
 readonly DOWNLOAD_PAGE="https://www.kakaocorp.com/page/service/all"
 readonly BINDINGS_FILE="$HOME/.config/hypr/bindings.lua"
+readonly FONT_PATCHER="$SCRIPT_DIR/patch-kakaotalk-korean-input.sh"
 
 log() { printf '[kakaotalk-bottles] %s\n' "$*"; }
 fail() { printf '[kakaotalk-bottles] 오류: %s\n' "$*" >&2; exit 1; }
@@ -56,31 +58,14 @@ bottle_drive_c() {
   printf '%s' "$HOME/.var/app/$FLATPAK_ID/data/bottles/bottles/$BOTTLE_NAME/drive_c"
 }
 
-# Windows 환경에 한글 폰트가 없으면 설치 관리자와 앱 글자가 네모로 깨집니다.
-# 시스템의 Noto CJK 폰트를 보틀에 넣고 맑은 고딕 등을 대체 등록합니다.
+# Windows 환경에 실제 한글 TrueType 글꼴을 넣어 설치 관리자, 앱 화면,
+# 채팅 입력창까지 네모로 깨지지 않게 합니다.
 install_korean_fonts() {
-  local drive_c fonts_dir reg_file src
+  local drive_c
   drive_c="$(bottle_drive_c)"
-  fonts_dir="$drive_c/windows/Fonts"
-  [[ -d "$fonts_dir" ]] || return 0
-
-  for src in /usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc /usr/share/fonts/noto-cjk/NotoSansCJK-Bold.ttc; do
-    [[ -f "$src" ]] && cp -n "$src" "$fonts_dir/"
-  done
-
-  reg_file="$drive_c/fixfonts.reg"
-  cat >"$reg_file" <<'REG'
-REGEDIT4
-
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontSubstitutes]
-"Malgun Gothic"="Noto Sans CJK KR"
-"Malgun Gothic Bold"="Noto Sans CJK KR"
-"Gulim"="Noto Sans CJK KR"
-"GulimChe"="Noto Sans CJK KR"
-"Dotum"="Noto Sans CJK KR"
-"Batang"="Noto Sans CJK KR"
-REG
-  run_quiet bottles_cli_direct run -b "$BOTTLE_NAME" -e 'C:\windows\regedit.exe' '/S' 'C:\fixfonts.reg' >/dev/null || true
+  [[ -x "$FONT_PATCHER" ]] ||
+    fail "한글 입력 패치 스크립트를 찾지 못했습니다: $FONT_PATCHER"
+  "$FONT_PATCHER" --from-installer
 
   # 모니터 배율이 2인 환경에서 Wine 기본 96 DPI는 글자가 너무 작습니다.
   # 레지스트리 v5 형식이어야 적용됩니다(REGEDIT4는 조용히 무시됨).
@@ -91,7 +76,7 @@ Windows Registry Editor Version 5.00
 "LogPixels"=dword:000000c0
 REG
   run_quiet bottles_cli_direct run -b "$BOTTLE_NAME" -e 'C:\windows\regedit.exe' '/S' 'C:\dpi.reg' >/dev/null || true
-  log "보틀에 한글 폰트·대체 등록·200% DPI를 적용했습니다"
+  log "보틀에 한글 입력 패치와 200% DPI를 적용했습니다"
 }
 
 bottles_cli_direct() {
@@ -120,11 +105,12 @@ ensure_installer() {
 }
 
 bottle_exists() {
-  bottles_cli info -b "$BOTTLE_NAME" >/dev/null 2>&1
+  [[ -d "$(bottle_drive_c)" ]]
 }
 
 kakaotalk_exe_path() {
-  local base="$HOME/.local/share/bottles/bottles/$BOTTLE_NAME/drive_c"
+  local base
+  base="$(bottle_drive_c)"
   local p
   for p in \
     "$base/Program Files (x86)/Kakao/KakaoTalk/KakaoTalk.exe" \
