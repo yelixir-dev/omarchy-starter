@@ -1219,8 +1219,6 @@ sudo ./manage-vpn-bypass-routes.sh remove # 적용 해제</code></pre>
           <pre><code>./install-kakaotalk-bottles.sh --uninstall</code></pre>
         </section>
 
-
-
         <aside class="ai-prompt" aria-label="AI에게 카카오톡 설치 맡기기">
           <strong>AI에게 맡기기</strong>
           <pre><code>내 컴퓨터는 Omarchy(Arch Linux)야.
@@ -1229,6 +1227,54 @@ install-kakaotalk-bottles.sh로 Bottles 기반 카카오톡을 설치해줘.
 Windows 설치 관리자가 열리면 내가 직접 클릭해서 완료할게.
 Super + Shift + K가 비어 있으면 실행 단축키로 등록하고, 점유돼 있으면
 알려만 줘. 설치 후 카카오톡이 실제로 실행되는지 확인해줘.</code></pre>
+        </aside>
+
+        <section class="step-card">
+          <span class="step-label">이미 설치했다면</span>
+          <h2>채팅 입력창의 한글이 네모로 보일 때 패치합니다</h2>
+          <p>
+            카카오톡 화면의 한글은 정상인데 채팅 입력창에 쓰는 글자만 네모로
+            보인다면 아래 스크립트를 실행하세요. 적용이 끝나면 카카오톡을 완전히
+            종료했다가 다시 실행해야 합니다.
+          </p>
+          <pre><code>cd omarchy-starter
+./patch-kakaotalk-korean-input.sh</code></pre>
+        </section>
+
+        <aside class="ai-prompt" aria-label="AI에게 카카오톡 한글 입력 패치 맡기기">
+          <strong>AI에게 한글 입력 패치 맡기기</strong>
+          <pre><code>내 컴퓨터는 Omarchy(Arch Linux)이고, Bottles로 카카오톡을 이미 설치했어.
+채팅 입력창에 한글을 쓰면 글자가 네모로 보여.
+https://github.com/yelixir-dev/omarchy-starter 저장소를 clone 받고, 그 안의
+patch-kakaotalk-korean-input.sh를 실행해서 고쳐줘.
+관리자 인증이 필요하면 내가 직접 할게. 적용 후 카카오톡을 완전히 종료했다가
+다시 실행하고, 입력창에서 한글이 정상으로 보이는지 확인해줘.</code></pre>
+        </aside>
+
+        <aside class="callout" aria-label="Wine 시스템 트레이 숨김 안내">
+          <strong>이 컴퓨터에서는 Wine 시스템 트레이를 숨겼습니다</strong>
+          Windows용 카카오톡이 만드는 별도 트레이 창이 오른쪽 위에 떠 있는 모습이
+          보기 싫어서, <span class="nowrap"><code>wine-tray-hide</code></span>가
+          해당 창을 항상 숨기도록 설정했습니다. 카카오톡은 트레이 창이 없어도
+          백그라운드에서 계속 실행되며, <span class="nowrap"><kbd>Super</kbd> +
+          <kbd>Shift</kbd> + <kbd>K</kbd></span>를 누르면 본창을 다시
+          불러올 수 있습니다.
+          <p>
+            Wine 트레이를 다시 표시하려면 숨김 데몬을 종료하고,
+            <code>~/.config/hypr/autostart.lua</code>에서 아래 자동 실행 줄을
+            주석 처리한 뒤 카카오톡을 완전히 종료했다가 다시 실행하세요.
+          </p>
+          <pre><code>pkill -f '^bash .*/wine-tray-hide$'
+micro ~/.config/hypr/autostart.lua
+
+# 아래 줄 앞에 --를 붙입니다.
+-- o.launch_on_start("wine-tray-hide")
+
+hyprctl reload</code></pre>
+          <p>
+            설정 파일을 주석 처리하지 않으면 다음 로그인 때 숨김 데몬이 다시
+            시작됩니다.
+          </p>
         </aside>
 
         <section class="chapter-intro">
@@ -1299,6 +1345,10 @@ Super + Shift + 9(영역), Super + Shift + 0(전체 화면) 캡처와 상태바
             <li>
               <code>install-kakaotalk-bottles.sh</code>: Bottles 카카오톡 설치
               스크립트
+            </li>
+            <li>
+              <code>patch-kakaotalk-korean-input.sh</code>: 기존 카카오톡의 한글
+              입력창 네모 표시 패치
             </li>
             <li>
               <code>install-screenshot-shortcuts.sh</code>: Mac 스타일 캡처 단축키와
