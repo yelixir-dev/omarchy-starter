@@ -102,6 +102,8 @@ T[kakaotalk.choice.title]='카카오톡을 어떤 방식으로 설치할까요?'
 T[kakaotalk.choice.bottles]='Bottles (권장 · 검증됨)'
 T[kakaotalk.choice.wine]='Wine AUR 패키지 (실험적 · 가벼움)'
 T[kakaotalk.choice.both]='둘 다 (카카오톡 2개 · 로그인 따로)'
+T[kakaotalk.wine_hint]='설치했습니다. 터미널에서 kakaotalk 을 한 번 실행하면 Windows용 카카오톡 설치가 이어집니다.'
+T[kakaotalk.wine_data]='대화 데이터는 남겨 두었습니다. 완전히 지우려면 이 폴더를 삭제하세요'
 
 T[tailscale.name]='Tailscale'
 T[tailscale.desc]='내 기기들을 하나의 사설 네트워크로 묶습니다. 이 안내서의 방식(--accept-routes=false)으로 설치합니다.

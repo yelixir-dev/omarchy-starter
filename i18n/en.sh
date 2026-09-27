@@ -102,6 +102,8 @@ T[kakaotalk.choice.title]='How should KakaoTalk be installed?'
 T[kakaotalk.choice.bottles]='Bottles (recommended · tested)'
 T[kakaotalk.choice.wine]='Wine AUR package (experimental · lighter)'
 T[kakaotalk.choice.both]='Both (two KakaoTalk apps · separate logins)'
+T[kakaotalk.wine_hint]='Installed. Run kakaotalk once in a terminal to finish installing the Windows client.'
+T[kakaotalk.wine_data]='Chat data was kept. Delete this folder to remove it completely'
 
 T[tailscale.name]='Tailscale'
 T[tailscale.desc]='Joins your devices into one private network, set up the way this guide does (--accept-routes=false).

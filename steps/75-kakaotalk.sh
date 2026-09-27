@@ -16,16 +16,24 @@ kakaotalk_status() {
 kakaotalk_install() {
   case "${STEP_CHOICE:-bottles}" in
     bottles) bash "$OS_ROOT/install-kakaotalk-bottles.sh" install ;;
-    wine) pkg_aur_add kakaotalk ;;
+    wine) kakaotalk_install_wine ;;
     both)
       bash "$OS_ROOT/install-kakaotalk-bottles.sh" install
-      pkg_aur_add kakaotalk
+      kakaotalk_install_wine
       ;;
   esac
 }
 
+kakaotalk_install_wine() {
+  pkg_aur_add kakaotalk
+  log "$(t kakaotalk.wine_hint)"
+}
+
 kakaotalk_remove() {
   kakaotalk_has_bottles && bash "$OS_ROOT/install-kakaotalk-bottles.sh" --uninstall
-  kakaotalk_has_wine && pkg_drop kakaotalk
+  if kakaotalk_has_wine; then
+    pkg_drop kakaotalk
+    [[ -d "$HOME/.local/share/kakaotalk" ]] && log "$(t kakaotalk.wine_data): $HOME/.local/share/kakaotalk"
+  fi
   return 0
 }

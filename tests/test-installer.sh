@@ -204,6 +204,30 @@ if [[ -x /usr/share/omarchy/bin/omarchy-launch-editor ]]; then
 fi
 pass "nano step: omarchy-launch-editor opens nano after install and the previous editor after removal"
 
+mkdir -p -- "$TEST_HOME/.config/hypr"
+printf 'require("hypr.bindings")\n' >"$TEST_HOME/.config/hypr/hyprland.lua"
+printf '#!/usr/bin/env bash\nexit 0\n' >"$FAKE_BIN/hyprctl"
+chmod +x "$FAKE_BIN/hyprctl"
+run_keys() {
+  HOME="$TEST_HOME" XDG_CONFIG_HOME="$TEST_HOME/.config" PATH="$FAKE_BIN:$PATH" STEP_CHOICE=keep-ctrl-space \
+    OMARCHY_STARTER_STATE_DIR="$TMP_ROOT/state4" OMARCHY_STARTER_CONFIG_DIR="$TEST_HOME/.config/omarchy-starter" \
+    bash -c 'set -e; declare -A T=(); source "$1/lib/common.sh"; register_step() { :; }; source "$1/steps/40-korean-keys.sh"; "korean_keys_$2"' _ "$ROOT_DIR" "$1"
+}
+[[ "$(run_keys status)" == missing ]] || fail "korean-keys starts missing"
+run_keys install >/dev/null
+[[ "$(run_keys status)" == installed ]] || fail "korean-keys installed"
+lua_file="$TEST_HOME/.config/omarchy-starter/hypr/korean-keys.lua"
+grep -Fq "dofile(\"$lua_file\")" "$TEST_HOME/.config/hypr/hyprland.lua" || fail "hyprland.lua loads the snippet"
+grep -Fq 'korean:ralt_hangul' "$lua_file" || fail "snippet maps Right Alt to Hangul"
+grep -Fq 'fcitx5-remote -c; omarchy-menu toggle' "$lua_file" || fail "menu opens in Latin input"
+if command -v luac >/dev/null; then
+  luac -p "$lua_file" "$TEST_HOME/.config/hypr/hyprland.lua" || fail "generated Lua parses"
+fi
+run_keys remove >/dev/null
+[[ "$(cat "$TEST_HOME/.config/hypr/hyprland.lua")" == 'require("hypr.bindings")' ]] || fail "hyprland.lua restored"
+[[ ! -e "$lua_file" ]] || fail "snippet removed"
+pass "korean-keys step: loads a parsable Lua snippet from hyprland.lua and removes it cleanly"
+
 for f in "$ROOT_DIR"/install.sh "$ROOT_DIR"/lib/*.sh "$ROOT_DIR"/i18n/*.sh "$ROOT_DIR"/steps/*.sh; do
   bash -n "$f" || fail "syntax: $f"
 done
