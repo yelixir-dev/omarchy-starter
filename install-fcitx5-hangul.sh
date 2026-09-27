@@ -64,7 +64,11 @@ fi
 
 if ! fcitx5-remote --check >/dev/null 2>&1; then
   log "Fcitx5를 시작합니다."
-  fcitx5 --disable notificationitem -d
+  if systemctl --user cat omarchy-fcitx5.service >/dev/null 2>&1; then
+    systemctl --user restart omarchy-fcitx5.service
+  else
+    fcitx5 --disable notificationitem -d
+  fi
 fi
 
 for _ in {1..50}; do
